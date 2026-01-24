@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Blox - Top Up Robux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #007BFF;
+            --light-blue: #E3F2FD;
+            --dark-blue: #0056b3;
+            --white: #ffffff;
+            --gray: #f4f4f4;
+            --text-color: #333;
+            --error-red: #ff4d4d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth; /* Smooth scroll effect */
+        }
+
+        body {
+            background-color: var(--light-blue);
+            color: var(--text-color);
+            padding-bottom: 80px; /* Space for fixed bottom button */
+        }
+
+        /* --- Header --- */
+        header {
+            background: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* --- Container --- */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* --- Banner Slide --- */
+        .banner-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .active-slide {
+            display: block;
+            animation: fade 1s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        /* --- Stock & Youtube --- */
+        .info-section {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .stock-text {
+            font-size: 1.2rem;
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+        }
+
+        .stock-count {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            display: block;
+        }
+
+        .yt-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #FF0000;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .yt-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* --- Section Styling --- */
+        .section-box {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 10px;
+            color: var(--dark-blue);
+        }
+
+        /* --- Form Inputs --- */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-blue);
+        }
+
+        .price-display {
+            margin-top: 10px;
+            background: var(--light-blue);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: right;
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        /* --- Error Handling --- */
+        .error-text {
+            color: var(--error-red);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+            border-color: var(--error-red) !important;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* --- Payment Methods --- */
+        .payment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .payment-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: white;
+        }
+
+        .payment-card:hover {
+            border-color: #b3d7ff;
+        }
+
+        .payment-card.selected {
+            border-color: var(--primary-blue);
+            background-color: #f0f7ff;
+            box-shadow: 0 0 10px rgba(0,123,255,0.2);
+        }
+
+        .payment-card img {
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .payment-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            display: block;
+        }
+
+        .payment-desc {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* --- Floating Buy Button --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 99;
+        }
+
+        .total-price-float {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--dark-blue);
+        }
+
+        .btn-buy {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: var(--dark-blue);
+        }
+
+        /* --- Modal / Popup --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            animation: popUp 0.3s ease-out;
+        }
+
+        @keyframes popUp {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-blue);
+        }
+
+        .order-details {
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .order-details p {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-confirm {
+            flex: 1;
+            background: #25D366; /* WA Green */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            background: #ff4d4d;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Nova Blox</h1>
+        <p>Robux Termurah, Aman, Dan Terpercaya</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="banner-container">
+            <div class="slide active-slide">
+                <img src="https://files.catbox.moe/9tqsg3.jpg" alt="Banner 1">
+            </div>
+            <div class="slide">
+                <img src="https://files.catbox.moe/9tqsg3.jpg" alt="Banner 2">
+            </div>
+            <div class="slide">
+                <img src="https://files.catbox.moe/9tqsg3.jpg" alt="Banner 3">
+            </div>
+        </div>
+
+        <div class="info-section">
+            <p class="stock-text">Stok Robux Tersisa:</p>
+            <span class="stock-count">1,000</span>
+            <br>
+            <a href="https://youtube.com" target="_blank" class="yt-btn">
+                <i class="fab fa-youtube"></i> Cara Membeli
+            </a>
+        </div>
+
+        <div class="section-box" id="section-data">
+            <h3 class="section-title">1. Data Akun</h3>
+            <div class="input-group">
+                <label class="input-label">Username Roblox</label>
+                <input type="text" id="username" class="form-input" placeholder="Contoh: Nova123" oninput="clearError('username')">
+                <p class="error-text" id="error-username">Username Harus Di Isi!</p>
+            </div>
+        </div>
+
+        <div class="section-box" id="section-nominal">
+            <h3 class="section-title">2. Pilih Nominal Robux</h3>
+            <div class="input-group">
+                <label class="input-label">Jumlah Robux</label>
+                <input type="number" id="robuxAmount" class="form-input" placeholder="Min. 10 Robux" oninput="calculatePrice()">
+                <p class="error-text" id="error-robux">Nominal Robux Harus Di Isi!</p>
+                <div class="price-display">
+                    Harga: <span id="displayPrice">Rp 0</span>
+                </div>
+                <small style="color: #666; font-size: 0.8rem;">Rate: Rp 100 / 1 Robux</small>
+            </div>
+        </div>
+
+        <div class="section-box" id="section-payment">
+            <h3 class="section-title">3. Metode Pembayaran</h3>
+            <p class="error-text" id="error-payment" style="margin-bottom: 10px;">Harus Di Isi!</p>
+            <div class="payment-list">
+                
+                <div class="payment-card" onclick="selectPayment(this, 'QRIS')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/QRIS_logo.svg/1200px-QRIS_logo.svg.png" alt="QRIS">
+                    <div class="payment-info">
+                        <span class="payment-name">QRIS</span>
+                        <span class="payment-desc">All Payment</span>
+                    </div>
+                    <i class="far fa-circle check-icon"></i>
+                </div>
+
+                <div class="payment-card" onclick="selectPayment(this, 'Dana')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png" alt="Dana">
+                    <div class="payment-info">
+                        <span class="payment-name">Dana Transfer</span>
+                        <span class="payment-desc">Manual Transfer</span>
+                    </div>
+                    <i class="far fa-circle check-icon"></i>
+                </div>
+
+                <div class="payment-card" onclick="selectPayment(this, 'GoPay')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/2560px-Gopay_logo.svg.png" alt="GoPay">
+                    <div class="payment-info">
+                        <span class="payment-name">GoPay</span>
+                        <span class="payment-desc">Manual Transfer</span>
+                    </div>
+                    <i class="far fa-circle check-icon"></i>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bottom-nav">
+        <div>
+            <span style="font-size: 0.8rem; display: block;">Total Bayar:</span>
+            <span class="total-price-float" id="floatPrice">Rp 0</span>
+        </div>
+        <button class="btn-buy" onclick="validateAndBuy()">Beli Sekarang</button>
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Invoice Pesanan</h3>
+            <div class="order-details">
+                <p><span>Username:</span> <strong id="conf-user">-</strong></p>
+                <p><span>Robux:</span> <strong id="conf-robux">-</strong></p>
+                <p><span>Metode:</span> <strong id="conf-payment">-</strong></p>
+                <hr style="margin: 10px 0;">
+                <p><span>Total:</span> <strong id="conf-price" style="color: var(--primary-blue);">-</strong></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Batal</button>
+                <button class="btn-confirm" onclick="processToWhatsapp()">
+                    <i class="fab fa-whatsapp"></i> Lanjut
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Konfigurasi ---
+        const robuxRate = 100; // Harga per 1 Robux
+        const waNumber = "6281513681044"; // Ganti dengan Nomor WA Owner (format 62...)
+
+        // --- Banner Slider Logic ---
+        let slideIndex = 0;
+        const slides = document.getElementsByClassName("slide");
+        
+        function showSlides() {
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active-slide");
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].classList.add("active-slide");
+            setTimeout(showSlides, 3000); // Ganti gambar setiap 3 detik
+        }
+        showSlides();
+
+        // --- Calculator & Scroll Logic ---
+        let selectedPaymentMethod = null;
+
+        function calculatePrice() {
+            const amount = document.getElementById('robuxAmount').value;
+            const price = amount * robuxRate;
+            
+            // Format Rupiah
+            const formattedPrice = "Rp " + price.toLocaleString('id-ID');
+            
+            document.getElementById('displayPrice').innerText = formattedPrice;
+            document.getElementById('floatPrice').innerText = formattedPrice;
+
+            clearError('robux');
+        }
+
+        // --- Payment Selection ---
+        function selectPayment(element, methodName) {
+            // Reset semua kartu
+            const cards = document.querySelectorAll('.payment-card');
+            cards.forEach(card => {
+                card.classList.remove('selected');
+                card.querySelector('.check-icon').classList.replace('fa-check-circle', 'fa-circle');
+            });
+
+            // Set kartu yang dipilih
+            element.classList.add('selected');
+            element.querySelector('.check-icon').classList.replace('fa-circle', 'fa-check-circle');
+            
+            selectedPaymentMethod = methodName;
+            clearError('payment');
+        }
+
+        // --- Validation System ---
+        function clearError(type) {
+            if(type === 'username') {
+                document.getElementById('username').classList.remove('shake');
+                document.getElementById('error-username').style.display = 'none';
+            }
+            if(type === 'robux') {
+                document.getElementById('robuxAmount').classList.remove('shake');
+                document.getElementById('error-robux').style.display = 'none';
+            }
+            if(type === 'payment') {
+                document.getElementById('section-payment').classList.remove('shake');
+                document.getElementById('error-payment').style.display = 'none';
+            }
+        }
+
+        function triggerError(elementId, errorId) {
+            const el = document.getElementById(elementId);
+            const errText = document.getElementById(errorId);
+            
+            // Scroll ke elemen
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Tambah efek getar
+            el.classList.add('shake');
+            errText.style.display = 'block';
+            
+            // Hapus kelas shake setelah animasi selesai agar bisa digetar lagi nanti
+            setTimeout(() => {
+                el.classList.remove('shake');
+            }, 500);
+        }
+
+        function validateAndBuy() {
+            const username = document.getElementById('username').value;
+            const robux = document.getElementById('robuxAmount').value;
+
+            // Cek Username
+            if (!username) {
+                triggerError('username', 'error-username');
+                return; // Stop di sini, jangan cek yang bawah dulu
+            }
+
+            // Cek Nominal
+            if (!robux || robux <= 0) {
+                triggerError('robuxAmount', 'error-robux');
+                return;
+            }
+
+            // Cek Pembayaran
+            if (!selectedPaymentMethod) {
+                triggerError('section-payment', 'error-payment');
+                return;
+            }
+
+            // Jika semua aman, buka Modal
+            showModal(username, robux);
+        }
+
+        // --- Modal Logic ---
+        function showModal(user, robux) {
+            const price = robux * robuxRate;
+            document.getElementById('conf-user').innerText = user;
+            document.getElementById('conf-robux').innerText = robux + " Robux";
+            document.getElementById('conf-payment').innerText = selectedPaymentMethod;
+            document.getElementById('conf-price').innerText = "Rp " + price.toLocaleString('id-ID');
+            
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        // --- WhatsApp Logic ---
+        function processToWhatsapp() {
+            const username = document.getElementById('username').value;
+            const robux = document.getElementById('robuxAmount').value;
+            const price = robux * robuxRate;
+            const formattedPrice = price.toLocaleString('id-ID');
+
+            const message = `Halo Admin Nova Blox, Saya mau beli Robux.%0A%0A` +
+                            `👤 Username: ${username}%0A` +
+                            `💎 Jumlah: ${robux} Robux%0A` +
+                            `💳 Pembayaran: ${selectedPaymentMethod}%0A` +
+                            `💰 Total Bayar: Rp ${formattedPrice}%0A%0A` +
+                            `Mohon diproses segera ya!`;
+
+            const url = `https://wa.me/${waNumber}?text=${message}`;
+            
+            window.open(url, '_blank');
+            closeModal();
+        }
+
+        // Event Listener khusus untuk Auto Scroll saat selesai mengetik robux
+        // Note: Menggunakan 'change' agar tidak scroll saat user masih mengetik.
+        // Scroll terjadi saat user klik area lain atau tekan enter.
+        document.getElementById('robuxAmount').addEventListener('change', function() {
+             if(this.value > 0) {
+                 document.getElementById('section-payment').scrollIntoView({ behavior: 'smooth' });
+             }
+        });
+
+    </script>
+</body>
+</html>
