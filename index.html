@@ -425,16 +425,20 @@
         </div>
 
         <div class="section-box" id="section-nominal">
-            <h3 class="section-title">2. Pilih Nominal Robux</h3>
-            <div class="input-group">
-                <label class="input-label">Jumlah Robux</label>
-                <input type="number" id="robuxAmount" class="form-input" placeholder="Min. 10 Robux" oninput="calculatePrice()">
-                <p class="error-text" id="error-robux">Nominal Robux Harus Di Isi!</p>
-                <div class="price-display">
-                    Harga: <span id="displayPrice">Rp 0</span>
-                </div>
-                <small style="color: #666; font-size: 0.8rem;">Rate: Rp 100 / 1 Robux</small>
-            </div>
+    <h3 class="section-title">2. Pilih Nominal Robux</h3>
+    <div class="input-group">
+        <label class="input-label">Jumlah Robux</label>
+        <input type="number" id="robuxAmount" class="form-input" placeholder="Min. 50 Robux" oninput="CalculateTax()">
+        <p class="error-text" id="error-robux">Nominal Robux Harus Di Isi!</p>
+        <div class="price-display">
+            Harga: <span id="displayPrice">Rp 0</span>
+        </div>
+        <!-- Pindahin Harga Gamepass di atas Rate -->
+        <div class="price-display" id="gamepassPriceDisplay" style="margin-top: 5px; font-weight: bold;">
+            Harga Gamepass: <span id="gamepassPrice">-</span>
+        </div>
+        <small style="color: #666; font-size: 0.8rem;">Rate: Rp 100 / 1 Robux</small>
+    </div>
         </div>
 
         <div class="section-box" id="section-payment">
@@ -505,7 +509,32 @@
         // --- Konfigurasi ---
         const robuxRate = 100; // Harga per 1 Robux
         const waNumber = "6281513681044"; // Ganti dengan Nomor WA Owner (format 62...)
+// Kalkulasi Nominal Robux
+        function CalculateTax() {
+    const robuxInput = document.getElementById('robuxAmount').value;
+    const displayPrice = document.getElementById('displayPrice');
+    const gamepassPriceSpan = document.getElementById('gamepassPrice');
 
+    if (!robuxInput || robuxInput < 50) {
+        document.getElementById('error-robux').style.display = 'block';
+        displayPrice.innerText = 'Rp 0';
+        gamepassPriceSpan.innerText = '-';
+        return;
+    } else {
+        document.getElementById('error-robux').style.display = 'none';
+    }
+
+    const robuxAmount = parseFloat(robuxInput);
+    const rate = 100; // Rp per Robux
+    const totalPrice = robuxAmount * rate;
+
+    displayPrice.innerText = `Rp ${totalPrice.toLocaleString()}`;
+
+    // Hitung Harga Gamepass supaya owner dapat Robux yang sama
+    const gamepassPrice = robuxAmount / 0.7; // 70% setelah tax
+    gamepassPriceSpan.innerText = `${Math.ceil(gamepassPrice)} Robux`;
+        }
+        
         // --- Banner Slider Logic ---
         let slideIndex = 0;
         const slides = document.getElementsByClassName("slide");
