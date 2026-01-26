@@ -389,7 +389,7 @@
 
     <header>
         <h1>Nova Blox</h1>
-        <p>Robux Termurah, Aman, Dan Terpercaya</p>
+        <p>Top Up Robux Cepat & Aman Untuk Semua Metode Pembayaran</p>
     </header>
 
     <div class="container">
@@ -420,7 +420,7 @@
             <div class="input-group">
                 <label class="input-label">Username Roblox</label>
                 <input type="text" id="username" class="form-input" placeholder="Contoh: Nova123" oninput="clearError('username')">
-                <p class="error-text" id="error-username">Username Harus Di Isi!</p>
+                <p class="error-text" id="error-username">Username Tidak Boleh Kosong!!</p>
             </div>
         </div>
 
@@ -515,10 +515,18 @@
     const displayPrice = document.getElementById('displayPrice');
     const gamepassPriceSpan = document.getElementById('gamepassPrice');
 
-    if (!robuxInput || robuxInput < 50) {
+    if (!robuxInput) {
         document.getElementById('error-robux').style.display = 'block';
         displayPrice.innerText = 'Rp 0';
         gamepassPriceSpan.innerText = '-';
+        return;
+    } else {
+        document.getElementById('error-robux').style.display = 'none';
+    }
+    if (!robuxInput < 50) {
+        document.getElementById('error-robux').style.display = 'block';
+        displayPrice.innerText = 'Rp 0';
+        gamepassPriceSpan.innerText = '';
         return;
     } else {
         document.getElementById('error-robux').style.display = 'none';
