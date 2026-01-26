@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova Blox - Top Up Robux</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://files.catbox.moe/1n78z7.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -522,8 +524,8 @@
         return;
     } else {
         document.getElementById('error-robux').style.display = 'none';
-    }
-    if (!robuxInput < 50) {
+    } else {
+    if (!robuxInput < 50) 
         document.getElementById('error-robux').style.display = 'block';
         displayPrice.innerText = 'Rp 0';
         gamepassPriceSpan.innerText = '';
