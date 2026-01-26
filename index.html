@@ -517,7 +517,7 @@
     const displayPrice = document.getElementById('displayPrice');
     const gamepassPriceSpan = document.getElementById('gamepassPrice');
 
-    if (!robuxInput && robuxInput > 50) {
+    if (!robuxInput || robuxInput > 50) {
         document.getElementById('error-robux').style.display = 'block';
         displayPrice.innerText = 'Rp 0';
         gamepassPriceSpan.innerText = '-';
