@@ -46,6 +46,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
+
+            min-height: 60px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         header h1 {
@@ -58,6 +64,15 @@
         header p {
             font-size: 0.9rem;
             opacity: 0.9;
+        }
+       .header-left {
+           display: flex;
+           align-items: center;
+       }
+        .header-logo {
+            height: 36px;
+            width: auto;
+            cursor: pointer;
         }
 
         /* --- Container --- */
@@ -311,13 +326,12 @@
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            transition: 0.3s;
         }
 
         .btn-buy:hover {
             background: var(--dark-blue);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            
         }
 
         /* --- Modal / Popup --- */
@@ -402,11 +416,12 @@
 <body>
 
     <header>
-        <h1>Nova Blox</h1>
-        <p>- Top Up Robux -</p>
+    <div class="header-left">
+        <img src="https://i.ibb.co.comkwNxDkP8h/IMG-20260127-WA0001.png" alt="Nova Logo" class="header-logo>
+            </div>
     </header>
 
-    <img src="https://i.ibb.co.com/wNxDkP8h/IMG-20260127-WA0001.png" alt="Corner Image" class="corner-img">
+    
     <div class="container">
         
         <div class="banner-container">
